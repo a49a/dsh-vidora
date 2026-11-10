@@ -1,0 +1,12 @@
+.git/
+.gitignore
+.npmignore
+node_modules/
+python-worker/.venv/
+python-worker/**/__pycache__/
+python-worker/**/*.pyc
+python-worker/tests/
+testdata/
+*.tgz
+*.log
+.DS_Store

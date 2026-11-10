@@ -1,0 +1,73 @@
+{
+  "name": "dsh-plugin-vidora",
+  "version": "0.1.0",
+  "description": "Local-first audio/video knowledge documentation for DeepSeek Harness: Qwen3-ASR, forced alignment, and local-LLM Markdown notes.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "default": "./dist/core/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "vidora": "./bin/vidora.mjs"
+  },
+  "files": [
+    "dist/",
+    "python-worker/*.py",
+    "python-worker/requirements.txt",
+    "python-worker/media/*.py",
+    "python-worker/asr/*.py",
+    "python-worker/alignment/*.py",
+    "scripts/",
+    "testdata/reports/",
+    "bin/",
+    "docs/",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.2-rc.1 <0.3.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "test:python": "python-worker/.venv/bin/python -m unittest discover -s python-worker/tests -v",
+    "check": "npm run build && node --check dist/index.js && node --test test/*.test.mjs",
+    "setup:worker": "node scripts/install-worker.mjs",
+    "prepare:models": "node scripts/prepare-models.mjs",
+    "generate:test-audio": "node scripts/generate-test-audio.mjs",
+    "test:real": "node scripts/real-asr-test.mjs"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "vidora",
+    "qwen3-asr",
+    "speech-to-text",
+    "markdown",
+    "local-first",
+    "ffmpeg"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  }
+}

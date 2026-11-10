@@ -1,0 +1,5 @@
+# Vidora bundle layer. The plugin is inserted as a global row; the profile's
+# own cordis.patch.yml can override `config` by the id below.
+- insert:
+    - id: vidora
+      name: dsh-plugin-vidora

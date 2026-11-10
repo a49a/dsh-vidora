@@ -1,0 +1,14 @@
+node_modules/
+dist/
+python-worker/.venv/
+python-worker/__pycache__/
+python-worker/**/__pycache__/
+*.pyc
+testdata/audio/
+testdata/results/
+testdata/models/
+.vidora-data/
+.DS_Store
+*.log
+
+*.tgz
