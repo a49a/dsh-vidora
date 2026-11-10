@@ -1,0 +1,11 @@
+{
+  "fixture": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/quick-zh.m4a",
+  "network": "HTTP_PROXY/HTTPS_PROXY/ALL_PROXY pointed at a closed port; HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1",
+  "status": "completed",
+  "transcript_id": "tr-980777b931f85ec5d1cf",
+  "processing_ms": 19689,
+  "realtime_factor": 0.5528,
+  "peak_memory_mb": 2552.5,
+  "cached_on_repeat": true,
+  "text_preview": "同学们好，今天我们介绍操作系统中的虚拟内存。虚拟内存通过地址映射，把进程使用的虚拟地址转换为物理地址，列表记录每一个页面的映射关系。RTLB用来加速地址转换。当发生缺页异常时，操作系统会选择淘汰一个页面，把它写回磁盘。这里要注意，LRU是一种常见的页面置换算法，但在实际系统中，我们经常使用Clock算法来近似LRU。"
+}

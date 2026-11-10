@@ -1,0 +1,18 @@
+{
+  "fixture": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-5m-zh.m4a",
+  "status": "completed",
+  "cached_on_repeat": true,
+  "transcript_id": "tr-4b08d8d7a019534e362b",
+  "duration_ms": 352154,
+  "segment_count": 15,
+  "aligned_segments": 15,
+  "language": "zh",
+  "model": "qwen3-asr-0.6b",
+  "processing_ms": 43147,
+  "realtime_factor": 0.1225,
+  "peak_memory_mb": 3454.3,
+  "warnings": [],
+  "elapsed_ms": 45960,
+  "text_preview": "第一部分，同学们好。这一部分我们继续讨论操作系统中的内存管理。虚拟内存通过地址映射，把进程使用的虚拟地址转换为物理地址。页表保存虚拟页到物理页的映射。RTLB用来加速地址转换。当发生缺页异常时，作系统会选择一个页面进行淘汰，必要时把它写回磁盘。LRU是一种常见的页面置换算法，但实际系统中经常使用Clock算法来近似LRU。我们还要区分内部碎片和外部碎片，理解分页、分段以及段页式管理的取舍。一、第二部分：同学们好。这一部分我们继续讨论操作系统中的内存管理。虚拟内存通过地址映射，",
+  "note": "Cancelled after 2 completed chunks, then resumed from checkpoint in the same Worker process."
+}

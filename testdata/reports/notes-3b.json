@@ -1,0 +1,49 @@
+{
+  "transcript_id": "tr-1a439fb295f3b482c172",
+  "source_duration_ms": 352154,
+  "llm": {
+    "provider": "openai-compatible",
+    "endpoint": "http://127.0.0.1:8091/v1",
+    "model": "qwen2.5-3b-instruct",
+    "local": true,
+    "runner": "llama.cpp llama-server, Metal, Q4_K_M"
+  },
+  "modes": {
+    "concise": {
+      "document_id": "doc-1a5bfb5f01004d2ba426",
+      "elapsed_ms": 35145,
+      "sections": 3,
+      "citations": 22,
+      "markdown_chars": 2485,
+      "preview": "---\ntitle: \"操作系统中的内存管理\"\nvidora: 1\ndocument_id: \"doc-1a5bfb5f01004d2ba426\"\ntranscript_id: \"tr-1a439fb295f3b482c172\"\nmode: \"concise\"\nlanguage: \"zh\"\nsource: \"lecture-5m-zh.m4a\"\nsource_sha256: \"b8ee32fa7f6260c66305b7820a6cf73886617725472a12db8e1f0d7e634fecb4\"\ngenerated_at: \"2026-11-10T12:41:58.339Z\"\nllm_provider: \"openai-compatible\"\nllm_model: \"qwen2.5-3b-instruct\"\nllm_local: true\n---\n\n# 操作系统中的内存管理\n\n> 本文由 Vidora 在本地生成。转写模型：qwen3-asr-0.6b；文档模式：精简讲义。\n>\n> 注意：“可读转写”/讲义为本地模型派生内容；原始 transcript.json 未被覆盖。\n\n## 虚拟内存与地址映射\n\n虚拟内存通过地址映射，把进程使用的虚拟地址转换为物理地址。页表保存虚拟页到物理页的映射。RTLB用来加速地址转换。当发生缺页异常时，操作系统会选择一个页面进行淘汰，必要时把它写回磁盘。\n\n- 虚拟内存通过地址映射转换虚拟地址为物理地址\n\n来源：[00:00](../transcripts/tr-1a439fb295f3b482c172.json#seg-000001) · [00:21](../transcripts/tr-1a439fb295f3b482c172.json#seg-000002) · [00:43](../transcripts/tr-1a439fb295f3b482c172.json#seg-000003) · [01:08](../transcripts/tr-1a439fb295f3b482c172.json#seg-000004) · [01:34](../transcripts/tr-1a439fb295f3b482c172.json#seg-000005) · [01:55](../transcripts/tr-1a439fb295f3b482c172.json#seg-000006) · [02:14](../transcripts/tr-1a439fb295f3b482c172.json#seg-000007) · [02:43](../transcripts/tr-1a439fb295f3b482c172.json#seg-000008)\n\n## 页面置换算法\n\nLRU是一种常见的页面置换算法，但实际系统中经常使"
+    },
+    "review": {
+      "document_id": "doc-f7a00318210bc58f4e68",
+      "elapsed_ms": 37215,
+      "sections": 3,
+      "citations": 22,
+      "markdown_chars": 2872,
+      "has_questions": true,
+      "has_checklist": true,
+      "preview": "---\ntitle: \"操作系统中的内存管理\"\nvidora: 1\ndocument_id: \"doc-f7a00318210bc58f4e68\"\ntranscript_id: \"tr-1a439fb295f3b482c172\"\nmode: \"review\"\nlanguage: \"zh\"\nsource: \"lecture-5m-zh.m4a\"\nsource_sha256: \"b8ee32fa7f6260c66305b7820a6cf73886617725472a12db8e1f0d7e634fecb4\"\ngenerated_at: \"2026-11-10T12:42:42.388Z\"\nllm_provider: \"openai-compatible\"\nllm_model: \"qwen2.5-3b-instruct\"\nllm_local: true\n---\n\n# 操作系统中的内存管理\n\n> 本文由 Vidora 在本地生成。转写模型：qwen3-asr-0.6b；文档模式：复习提纲。\n>\n> 注意：“可读转写”/讲义为本地模型派生内容；原始 transcript.json 未被覆盖。\n\n## 虚拟内存和地址映射\n\n虚拟内存通过地址映射，把进程使用的虚拟地址转换为物理地址。页表保存虚拟页到物理页的映射。RTLB用来加速地址转换。当发生缺页异常时，操作系统会选择一个页面进行淘汰，必要时把它写回磁盘。\n\n- 虚拟内存通过地址映射转换虚拟地址为物理地址\n- 页表保存虚拟页到物理页的映射\n- RTLB加速地址转换\n- 发生缺页异常时淘汰页面并写回磁盘\n\n### 自测问题\n1. 虚拟内存如何通过地址映射转换虚拟地址为物理地址？\n2. 页表的作用是什么？\n3. RTLB的作用是什么？\n4. 发生缺页异常时如何处理？\n\n### 复习清单\n- [ ] 复习虚拟内存地址映射\n- [ ] 复习页表和RTLB\n- [ ] 复习缺页异常处理\n\n来源：[00:00](../transcripts/tr-1a439fb295f3b482c172.json#seg-000001) · [00:21](../transcripts/tr-1a439fb295f3b482c172.json#seg-000002) · [00:43](../transcripts/tr-1a439fb295f3b482c172.json#seg-000003) · [01:08](../transcripts/tr-1a439fb295f3b482c172.json#seg-000004) · [01:34](../transcripts/tr-1a439fb295f3b482c172.json#seg-000005) · [01:55](../transcripts/tr-1a439fb295f3b482c172.json#seg-000006) · [02:14](../transcripts/tr-1a439fb295f3b482c172.json#seg-000007) · [02:43](../transcripts/tr-1a439fb295f3b482c172.json#seg-000008)\n\n## 页面置换算法\n\nLRU是一种常见的页面置换算法，但实际系统中经常使用Clock算法来近似LRU。\n\n- LRU页面置换算法\n- Clock算法近似LRU\n\n### 自测问题\n1. 页面置换算法有哪些？\n2. LRU和Clock算法的区别？\n\n### 复习清单\n- [ ] 复习LRU算法\n- [ ] 复习Clock算法\n\n来源：[00:21](../transcripts/tr-1a439fb295f3b482c172.json#seg-000002) · [01:55](../tran"
+    },
+    "detailed": {
+      "document_id": "doc-6ce92485d28fe1529397",
+      "elapsed_ms": 26914,
+      "sections": 3,
+      "citations": 22,
+      "preview": "Detailed mode completed; see the project notes directory for the full Markdown."
+    }
+  },
+  "cached_on_repeat": true,
+  "invalid_citations": 0,
+  "note": "The 5-minute fixture repeats one paragraph with different section numbers. Vidora merged duplicate sections deterministically. The 1.5B model produced weaker/repetitive notes; 3B output is shown.",
+  "harness_mode": {
+    "description": "llm.mode=harness with the DSH vidora-local/qwen2.5-3b-instruct provider, invoked through the real DSH LLM service.",
+    "document_id": "doc-6f93818de2bb627b276f",
+    "sections": 4,
+    "distinct_cited_segments": 31,
+    "citation_occurrences": 107,
+    "file": "/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/notes/doc-6f93818de2bb627b276f.md"
+  }
+}

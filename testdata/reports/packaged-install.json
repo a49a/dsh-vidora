@@ -1,0 +1,25 @@
+{
+  "package": "dsh-plugin-vidora-0.1.0.tgz",
+  "profile": "vidora-pack-test (headless)",
+  "install": "dsh plugin --profile vidora-pack-test add ./dsh-plugin-vidora-0.1.0.tgz",
+  "tool_calls": [
+    {
+      "type": "tool_call",
+      "tool": "vidora_transcribe",
+      "input": {
+        "path": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/quick-zh.m4a",
+        "align": true
+      }
+    },
+    {
+      "type": "tool_result",
+      "status": "completed",
+      "result": "Vidora 任务：task-mwapl744-b59e9f27（completed / completed）\n来源：/Users/ada/src/dsh/dsh-vidora/testdata/audio/quick-zh.m4a\n模型：qwen3-asr-0.6b；语言：auto；对齐：是\n项目：prj-81b434c8cf8d1963\nTranscript ID：tr-a0ae2430c6b226f774a4\n转写稿：/Users/ada/Library/Application Support/Vidora-PackTest/projects/prj-81b434c8cf8d1963/transcripts/tr-a0ae2430c6b226f774a4.json\n片段数：2；识别语言：zh；处理耗时：14496 ms"
+    },
+    {
+      "type": "final",
+      "text": "根据 vidora_transcribe 的结果，转写任务已完成。以下是关键信息：\n\n- **Transcript ID**: tr-a0ae2430c6b226f774a4\n- **片段数**: 2\n- **状态**: 已完成\n\n请查收转写完成的详细信息。"
+    }
+  ],
+  "observed": "The packaged worker and dist loaded from the profile node_modules; real ASR completed with 2 segments and alignment."
+}

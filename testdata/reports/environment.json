@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-10T12:39:06.318Z",
+  "machine": "MacBook Pro, Apple M1 Pro, 32 GB RAM, macOS",
+  "node": "v24.14.0",
+  "python": "3.10.9",
+  "torch": "2.14.1",
+  "transformers": "4.57.6",
+  "qwen_asr": "0.0.6",
+  "ffmpeg": "9.0.1",
+  "dsh": "0.2.2-rc.1",
+  "device": "Apple Metal (MPS), float16",
+  "audio_fixtures": "macOS say, voice Tingting (zh_CN), 180 wpm; synthetic but real speech inference"
+}

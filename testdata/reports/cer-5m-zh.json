@@ -1,0 +1,10 @@
+{
+  "reference_chars": 1432,
+  "hypothesis_chars": 1430,
+  "edit_distance": 19,
+  "cer": 0.013268,
+  "wer_char_level": 0.013268,
+  "transcript_id": "tr-1a439fb295f3b482c172",
+  "segment_count": 15,
+  "model": "qwen3-asr-0.6b"
+}

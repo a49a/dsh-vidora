@@ -1,0 +1,154 @@
+{
+  "profile": "vidora-test",
+  "harness": "DeepSeek Harness 0.2.2-rc.1 headless",
+  "main_model": "deepseek-account/deepseek-flash (remote, intentionally untrusted by Vidora)",
+  "local_notes_model": "openai-compatible qwen2.5-3b-instruct at http://127.0.0.1:8091/v1 (llama.cpp, Metal)",
+  "acceptance_flow": {
+    "description": "The exact acceptance shape: transcribe a 10m32s local mixed-language lecture, then generate a concise Markdown document with the local LLM. The remote model receives metadata only.",
+    "events": [
+      {
+        "type": "tool_call",
+        "tool": "vidora_transcribe",
+        "input": {
+          "path": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-10m-mixed.m4a",
+          "align": true,
+          "wait": true
+        }
+      },
+      {
+        "type": "tool_result",
+        "status": "completed",
+        "result": "Vidora 命中本地缓存：tr-1ce48c6b7245f7ff25d5\nTranscript ID：tr-1ce48c6b7245f7ff25d5\n来源：/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-10m-mixed.m4a\n转写稿：/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/transcripts/tr-1ce48c6b7245f7ff25d5.json\n片段数：31；识别语言：zh\n提示：命中本地缓存：相同媒体内容、模型和处理参数，未重新执行 ASR。"
+      },
+      {
+        "type": "tool_call",
+        "tool": "vidora_generate_notes",
+        "input": {
+          "transcriptId": "tr-1ce48c6b7245f7ff25d5",
+          "mode": "concise"
+        }
+      },
+      {
+        "type": "tool_result",
+        "status": "completed",
+        "result": "Vidora 讲义已生成：doc-4c08e00e71f4410d2ae8（concise v1）\n文件：/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/notes/doc-4c08e00e71f4410d2ae8.md\n章节：2；引用 31 个不同片段（共 91 次）\n本地模型：openai-compatible / qwen2.5-3b-instruct\n命中已有讲义版本，未重新调用本地模型。\n当前会话模型未列入本地信任列表：正文、标题和警告不会返回给该模型；请在本机打开文件。\n提示：本地讲义已生成；当前会话不可信，警告与章节标题已隐藏。"
+      },
+      {
+        "type": "final",
+        "text": "转写和 concise 讲义都已生成，全程没有用 bash 或文件工具读取转写正文。\n\n**1) 转写结果**\n- Transcript ID：`tr-1ce48c6b7245f7ff25d5`\n- 片段数：**31**\n- 识别语言：zh\n- 说明：传入 `align=true` 后命中了相同媒体、模型和处理参数的本地缓存，因此没有重新执行 ASR\n\n**2) Concise 讲义**\n- Document ID：`doc-4c08e00e71f4410d2ae8`（concise v1）\n- 文件路径：`/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/notes/doc-4c08e00e71f4410d2ae8.md`\n- 章节数：2\n- 引用情况：引用了 31 个不同片段，共出现 91 次引用\n- 本地模型：openai-compatible / qwen2.5-3b-instruct，命中了已有讲义版本，没有重新调用模型\n\n**一点说明**：当前会话模型不在本地信任列表中，因此工具只返回了元数据，讲义正文、标题和警告没有回传。需要在本机直接打开上面路径中的 Markdown 文件查看正文。"
+      }
+    ]
+  },
+  "privacy_guard": {
+    "description": "Remote model tries to read transcript.json through bash. The runtime tool guard denies the call.",
+    "events": [
+      {
+        "type": "tool_call",
+        "tool": "bash",
+        "input": {
+          "description": "Read first 200 chars of transcript JSON",
+          "command": "head -c 200 \"/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/transcripts/tr-1ce48c6b7245f7ff25d5.json\"; echo; echo \"---exit:$?\""
+        }
+      },
+      {
+        "type": "tool_result",
+        "status": "error",
+        "result": "Error: Vidora strict-local mode: this untrusted session may not read or write Vidora transcript/document paths. Use vidora_export to create a file and open it locally, or switch to a trusted local model."
+      },
+      {
+        "type": "final",
+        "text": "读取被拒绝了，我没有尝试其他方式绕过。拒绝原因原文如下：\n\n```\nError: Vidora strict-local mode: this untrusted session may not read or write Vidora transcript/document paths. Use vidora_export to create a file and open it locally, or switch to a trusted local model.\n```\n\n这两条命令都没有执行：bash 没有返回任何文件内容或退出码，说明是运行环境在命令执行前就按 Vidora strict-local 模式拦截了这条命令，而不是 `head` 本身报错。"
+      }
+    ]
+  },
+  "hidden_content_tools": {
+    "description": "Remote model is asked to call vidora_get_transcript. It reports the tool is absent from its catalog and lists only the six safe Vidora tools.",
+    "events": [
+      {
+        "type": "final",
+        "text": "我无法调用 `vidora_get_transcript`：这个工具在当前会话的工具目录中不存在，因此也无法产生该工具的错误信息；我没有伪造错误文本，也没有改用 bash 或读取文件的方式去获取内容。\n\n当前会话里可用的 Vidora 工具只有下面这些：\n\n- `vidora_transcribe`、`vidora_task_status`、`vidora_cancel_task`\n- `vidora_list_models`、`vidora_generate_notes`、`vidora_export`\n\n其中 `vidora_export` 能把 transcript 导出成 md、json、txt 或 srt 文件，但它只返回路径和大小等元数据，不返回正文，而且会写出文件，属于你明确排除的方式，所以我没有执行。\n\n如果你希望我继续，有两个可选方向：\n1. 你确认该工具的实际名称，或它为哪个版本新增，我再按正确名称调用；\n2. 你明确允许使用 `vidora_export` 导出后由你自行查看文件，也可以换成别的读取途径。\n\n按照你的要求，到此为止，不做替代读取。"
+      }
+    ]
+  },
+  "observations": [
+    "vidora_transcribe default wait=true returned only after the real local ASR task completed.",
+    "The remote model received transcript_id, segment count, language, task path; it did not receive transcript body.",
+    "vidora_generate_notes used the loopback llama.cpp endpoint and returned metadata only.",
+    "The file-tool guard denied a bash read of the Vidora transcript path.",
+    "vidora_get_transcript was absent from the remote tool schema.",
+    "The first remote run used bash to inspect transcript metadata, which motivated the ctx.tools.guard() data-path guard. The guard test then denied the same kind of read."
+  ],
+  "fresh_asr_run": {
+    "description": "First remote-session acceptance run. This was a real Qwen3-ASR run on the 10m32s mixed fixture, before the file-tool guard was added. It also exposed the need for the guard: the remote model used bash to inspect transcript metadata.",
+    "events": [
+      {
+        "type": "tool_call",
+        "tool": "vidora_transcribe",
+        "input": {
+          "path": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-10m-mixed.m4a",
+          "align": true,
+          "language": "auto",
+          "wait": true
+        }
+      },
+      {
+        "type": "tool_call",
+        "tool": "vidora_generate_notes",
+        "input": {
+          "transcriptId": "tr-1ce48c6b7245f7ff25d5",
+          "mode": "concise",
+          "projectId": "prj-e66c6ea16c7de9f9"
+        }
+      }
+    ],
+    "observed_duration_ms": 630232,
+    "segment_count": 31,
+    "processing_ms": 71514,
+    "local_document_llm": "qwen2.5-3b-instruct"
+  },
+  "trusted_session_content_read": {
+    "description": "With the main DSH model switched to the trusted local vidora-local provider, vidora_get_transcript appears and returns the requested segment.",
+    "events": [
+      {
+        "type": "tool_call",
+        "tool": "vidora_get_transcript",
+        "input": {
+          "transcriptId": "tr-1ce48c6b7245f7ff25d5",
+          "limit": 1
+        }
+      },
+      {
+        "type": "tool_result",
+        "status": "completed",
+        "result": "转写稿：tr-1ce48c6b7245f7ff25d5（qwen3-asr-0.6b，zh）\n来源：/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-10m-mixed.m4a\n片段：1/31，offset 0\n[00:00] (seg-000001, aligned) 第一部分：This part reviews the virtual memory paging in a Chinese operating systems course。虚拟内存通过 paging 把虚拟地址 virtual address 转换为物理地址 physical address。页表 page table 记录映射 tbl，缓存最近的 translation。"
+      },
+      {
+        "type": "final",
+        "text": "根据返回的第一段文字内容，这是片段 1/31，片段的偏移量为 0，以下是转写稿的第一段：\n\n[00:00] (seg-000001, aligned) 第一部分：This part reviews the virtual memory paging in a Chinese operating systems course。虚拟内存通过 paging 把虚拟地址 virtual address 转换为物理地址 physical address。页表 page table 记录映射 tbl，缓存最近的 translation。\n\n希望这对你有帮助！如果需要更多帮助，请随时告知。"
+      }
+    ]
+  },
+  "trusted_session_document_read": {
+    "description": "With the trusted local main model, vidora_get_document returns a bounded Markdown excerpt and source metadata.",
+    "events": [
+      {
+        "type": "tool_call",
+        "tool": "vidora_get_document",
+        "input": {
+          "documentId": "doc-4c08e00e71f4410d2ae8",
+          "includeMarkdown": true,
+          "limit": 600
+        }
+      },
+      {
+        "type": "tool_result",
+        "status": "completed",
+        "result": "讲义：doc-4c08e00e71f4410d2ae8（concise v1）\n标题：虚拟内存管道\n文件：/Users/ada/Library/Application Support/Vidora/projects/prj-e66c6ea16c7de9f9/notes/doc-4c08e00e71f4410d2ae8.md\n章节块：3；Markdown 字符数：2417\n---\n---\ntitle: \"虚拟内存管道\"\nvidora: 1\ndocument_id: \"doc-4c08e00e71f4410d2ae8\"\ntranscript_id: \"tr-1ce48c6b7245f7ff25d5\"\nmode: \"concise\"\nlanguage: \"zh\"\nsource: \"lecture-10m-mixed.m4a\"\nsource_sha256: \"e66c6ea16c7de9f9c6076d98775147146c0d57c26c71a6144ec54af6749e5404\"\ngenerated_at: \"2026-11-10T12:54:05.176Z\"\nllm_provider: \"openai-compatible\"\nllm_model: \"qwen2.5-3b-instruct\"\nllm_local: true\n---\n\n# 虚拟内存管道\n\n> 本文由 Vidora 在本地生成。转写模型：qwen3-asr-0.6b；文档模式：精简讲义。\n>\n> 注意：“可读转写”/讲义为本地模型派生内容；原始 transcript.json 未被覆盖。\n\n## 虚拟内存管道\n\n虚拟内存通过paging把虚拟地址转换为物理地址，页表记录映射。发生page fault时，内核会选择victim page并执行replacement。LRU和clock都是页面置换\n---\n（已截断；请使用 offset/limit 继续读取）"
+      },
+      {
+        "type": "final",
+        "text": "根据返回的内容，文档的标题是“虚拟内存管道”，前两行 Markdown 内容如下：\n\n1. \ntitle: \"虚拟内存管道\"\n2. \n---\n# 虚拟内存管道\n> 本文由 Vidora 在本地生成。转写模型：qwen3-asr-0.6b；文档模式：精简讲义。\n>\n> 注意：“可读转写”/讲义为本地模型派生内容；原始 transcript.json 未被覆盖。\n\n因此，您现在可以继续使用这些信息进行分析或参考。如果还有其他需求或问题，请告知我。"
+      }
+    ]
+  }
+}

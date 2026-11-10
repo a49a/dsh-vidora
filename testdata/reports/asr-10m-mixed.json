@@ -1,0 +1,17 @@
+{
+  "fixture": "/Users/ada/src/dsh/dsh-vidora/testdata/audio/lecture-10m-mixed.m4a",
+  "status": "completed",
+  "cached_on_repeat": true,
+  "transcript_id": "tr-345fff9597bbb931f0c9",
+  "duration_ms": 632187,
+  "segment_count": 31,
+  "aligned_segments": 31,
+  "language": "zh",
+  "model": "qwen3-asr-0.6b",
+  "processing_ms": 60816,
+  "realtime_factor": 0.0962,
+  "peak_memory_mb": 3485.7,
+  "warnings": [],
+  "elapsed_ms": 63238,
+  "text_preview": "第一部分：This part reviews the virtual memory paging in a Chinese operating systems course。虚拟内存通过 paging 把虚拟地址 virtual address 转换为物理地址 physical address。页表 page table 记录映射 tbl，缓存最近的 translation。发生 page fault 时，内核会选择 victim page 并执行 replacement。l"
+}
